@@ -1,0 +1,75 @@
+{% extends "user_base.html" %}
+{% block content %}
+
+
+    <!-- Hero Section -->
+  
+   
+   
+    <!-- Contact Section -->
+    <section id="contact" class="contact section light-background">
+
+      <!-- Section Title -->
+      <div class="container section-title" data-aos="fade-up">
+        <h2>Update Profile</h2>
+        
+      </div><!-- End Section Title -->
+
+      <div class="container" data-aos="fade-up"  >
+
+        <div class="r">
+          
+          <div class="col-lg">
+            <div class="contact-form" data-aos="fade-up" data-aos-delay="300">
+              
+              <form action="" method="post" class="" data-aos="fade-up" data-aos-delay="200">
+                {% csrf_token %}
+                <div class="row gy-4">
+
+                  <div class="col-md-6">
+                    <input type="text" name="name" class="form-control" placeholder="Your Name" value="{{user.name}}" required="">
+                  </div>
+
+                  <div class="col-md-6 ">
+                    <input type="text" class="form-control" name="email" placeholder="Your Email" value="{{user.email}}" required="">
+                  </div>
+
+                  <div class="col-md-6">
+                    <input type="number" class="form-control" name="phone" placeholder="Your Phone" value="{{user.phone}}" maxlength="10" required="">
+                  </div>
+
+                  <div class="col-md-6">
+                    <input type="number" class="form-control" name="income" placeholder="Income" value="{{user.income}}" required="">
+                  </div>
+
+
+                  <div class="col-12 text-center">
+                    <div class="loading"></div>
+                    <div class="error-message"></div>
+                    <div class="sent-message"></div>
+
+                    <button type="submit" class="btn">Update</button>
+                  </div>
+
+                </div>
+              </form>
+
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+      {% if messages %}
+      {% for message in messages %}
+      <script>
+        alert("{{ message }}");
+      </script>
+      {% endfor %}
+      {% endif %}
+
+    </section><!-- /Contact Section -->
+
+
+
+{% endblock content %}

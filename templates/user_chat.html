@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="../static/assets/css/style-starter2.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+<style>
+body {
+  margin: 0 auto;
+  /* max-width: 800px; */
+  min-height: 1000px;
+  padding: 0 20px;
+  background-image: url(../static/assets/img/chatbg.jpg);
+}
+
+.container {
+  border: 2px solid #dedede;
+  background-color: #f1f1f1;
+  border-radius: 5px;
+  padding: 10px;
+  margin: 10px 0;
+  /* float: left; */
+}
+.container>span{
+    color: #000000a9;
+
+}
+
+.darker {
+  border-color: #ccc;
+  background-color: #d1d1d1;
+  /* float: right; */
+}
+
+.container::after {
+  content: "";
+  clear: both;
+  display: table;
+}
+
+.container img {
+  float: left;
+  max-width: 60px;
+  width: 100%;
+  margin-right: 20px;
+  border-radius: 50%;
+}
+
+.container img.right {
+  float: right;
+  margin-left: 20px;
+  margin-right:0;
+}
+
+.time-right {
+  float: right;
+  color: #aaa;
+}
+.msg-right {
+  float: right;
+}
+
+.time-left {
+  float: left;
+  color: #999;
+}
+p{
+    color: #000000;
+    font-weight: bold;
+}
+
+</style>
+</head>
+<body>
+
+    <a href="/view_experts"><button class="btn btn-danger">Back</button></a>
+<h2 style="color: white;">Chat Message</h2>
+<br>
+<form method="post">
+    {% csrf_token %}
+    <div class="row">
+        <div class="form-group col-12">
+        <input class="form-control" type="text" name="msg" id="w3lName"
+         required="" placeholder="Type a message">
+        </div>
+        <div class="col">
+         <button type="submit" class="msg_send_btn btn btn-success" type="button" style="height: 50x;width: 80px;">Send</button>
+
+        </div>
+    </div>
+</form>
+{% if messages %}
+
+{% for message in messages %}
+
+{% if message.receiver == sender and message.sender == receiver %}
+<div class="container darker">
+    <p>{{message.message}}</p>
+    <small class="time-left">{{message.date}}</small>
+  </div>
+  
+
+{% endif %}
+{% if message.receiver == receiver and message.sender == sender %}
+
+<div class="container">
+    <p class="msg-right">{{message.message}}</p><br><br>
+    <small class="time-right">{{message.date}}</small>
+  </div>
+  
+{% endif %}
+                    
+{% endfor %}
+
+{% endif %}
+
+
+
+</body>
+</html>

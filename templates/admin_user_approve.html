@@ -1,0 +1,55 @@
+{% extends "admin_base.html" %}
+{% block content %}
+<section> </section>
+<section id="services" class="services section light-background">
+
+    <!-- Section Title -->
+    <div class="container section-title" data-aos="fade-up">
+      <h2>Users</h2>
+     
+      
+    </div><!-- End Section Title -->
+
+    <div class="container" data-aos="fade-up" data-aos-delay="100">
+
+        <div class="row g-4">
+          {% for user in users %}
+          <div class="col-lg-3" data-aos="fade-up" data-aos-delay="100">
+            <div class="service-card d-flex">
+              <div>
+                <h3>{{ user.name }}</h3>
+                <p>Income: {{ user.income }}</p>
+                <p>Status: 
+                  <span class="{% if user.user.is_active %}text-success{% else %}text-danger{% endif %}">
+                    {% if user.user.is_active %}Active{% else %}Inactive{% endif %}
+                  </span>
+                </p>
+                <form method="post" action="{% url 'admin_user_approve' %}" style="display:inline;">
+                  {% csrf_token %}
+                  <input type="hidden" name="id" value="{{ user.id }}">
+                  <button type="submit" name="action" value="approve" class="btn btn-success" 
+                          {% if user.user.is_active %}disabled{% endif %}>Approve</button>
+                </form>
+                <form method="post" action="{% url 'admin_user_approve' %}" style="display:inline;">
+                  {% csrf_token %}
+                  <input type="hidden" name="id" value="{{ user.id }}">
+                  <button type="submit" name="action" value="block" class="btn btn-danger" 
+                          {% if not user.user.is_active %}disabled{% endif %}>Block</button>
+                </form>
+                
+                <a href="{% url 'view_user_details' user.id %}" class="btn btn-primary">View</a>
+              </div>
+            </div>
+          </div><!-- End Service Card -->
+          {% endfor %}
+        </div>
+      
+      </div>
+      
+
+  </section><!-- /Services Section -->
+
+
+{% endblock content %}
+
+

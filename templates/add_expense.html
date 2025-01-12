@@ -1,0 +1,91 @@
+
+{% extends "user_base.html" %}
+{% block content %}
+
+    <!-- Services Section -->
+    <section id="services" class="services section light-background">
+
+      <!-- Section Title -->
+      
+      <div class="container section-title" data-aos="fade-up">
+        <h2>Add Expense</h2>
+        
+        <form action="" method="post" class="form-group" enctype="multipart/form-data">
+          
+            {% csrf_token %}
+            <div class="row">
+            <div class="col-md-6 mb-3">
+                <input type="text" name="amount" class="form-control" placeholder="Amount" required="">
+            </div>
+            <div class="col-md-6 ">
+            <select name="category" id="" class="form-control lg-6" required="">
+                <option value="" selected disabled>Select Category</option>
+                <option value="food">Food</option>
+                <option value="transport">Transport</option>
+                <option value="house">House</option>
+                <option value="entertainment">entertainment</option>
+                <option value="other">Other</option>
+            </select>
+            </div>
+            </div>
+            <input type="submit" class="btn btn-primary mt-3" value="Add">
+        
+        </form>
+       
+        
+      </div><!-- End Section Title -->
+
+      <div class="container" data-aos="fade-up" data-aos-delay="100">
+        <h2>Balance : {{balance}}</h2>
+
+        <div class="row g-4">
+{% for expense in expenses %}
+          <div class="col-lg-12" data-aos="fade-up" data-aos-delay="100">
+            <div class="service-card d-flex">
+              <div class="icon flex-shrink-0">
+                <i class="bi bi-activity"></i>
+              </div>
+             
+                
+                <div class="row" style="width: 100%; display: flex;align-items: center;juatify-content: space-between;">
+                  <div class="col-sm-3" >Amount : {{ expense.amount }}</div>
+                  <div class="col-sm-3" >{{expense.category}}</div>
+                  <div class="col-sm-2" >{{expense.date}}</div>
+                  <div class="col-sm-2">
+                    <a href="\edit_expense?id={{ expense.id }}" class="btn btn-primary">edit</a>
+                  </div>
+                  <div class="col-sm-2">
+                  <a href="{% url 'remove_expense' %}?id={{ expense.id }}" class="btn btn-danger">Remove</a>
+                  </div>
+                  
+                </div>
+
+                
+            
+            </div>
+          </div><!-- End Service Card -->
+          {% endfor %}
+
+          
+
+          
+
+          
+
+        </div>
+
+      </div>
+      {% if messages %}
+  {% for message in messages %}
+      <script>
+          alert("{{ message }}");
+      </script>
+  {% endfor %}
+{% endif %}
+
+
+    </section><!-- /Services Section -->
+    {% endblock content %}
+    
+    <!-- Faq Section -->
+ 

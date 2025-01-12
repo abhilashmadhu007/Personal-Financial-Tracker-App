@@ -1,0 +1,52 @@
+{% extends "admin_base.html" %}
+
+{% block content %}
+<section id="services" class="services section light-background">
+
+    <!-- Section Title -->
+    <div class="container section-title" data-aos="fade-up">
+      <h2>Experts</h2>
+    </div><!-- End Section Title -->
+
+    <div class="container" data-aos="fade-up" data-aos-delay="100">
+
+        <div class="row g-4">
+          {% for expert in experts %}
+          <div class="col-lg-3" data-aos="fade-up" data-aos-delay="100">
+            <div class="service-card d-flex">
+              <div>
+                <h3>{{ expert.name }}</h3>
+                <p>Email: {{ expert.email }}</p>
+                <p>Status: 
+                  <span class="{% if expert.user.is_active %}text-success{% else %}text-danger{% endif %}">
+                    {% if expert.user.is_active %}Active{% else %}Inactive{% endif %}
+                  </span>
+                </p>
+                <p>experience: {{expert.exp}} yrs</p>
+                <form method="post" action="{% url 'admin_expert_approve' %}" style="display:inline;">
+                  {% csrf_token %}
+                  <input type="hidden" name="id" value="{{ expert.id }}">
+                  <button type="submit" name="action" value="approve" class="btn btn-success" 
+                          {% if expert.user.is_active %}disabled{% endif %}>Approve</button>
+                </form>
+                <form method="post" action="{% url 'admin_expert_approve' %}" style="display:inline;">
+                  {% csrf_token %}
+                  <input type="hidden" name="id" value="{{ expert.id }}">
+                  <button type="submit" name="action" value="block" class="btn btn-danger" 
+                          {% if not expert.user.is_active %}disabled{% endif %}>Block</button>
+                </form>
+                
+                
+              </div>
+            </div>
+          </div><!-- End Service Card -->
+          {% endfor %}
+        </div>
+      
+    </div>
+
+</section><!-- /Services Section -->
+
+
+{% endblock content %}
+

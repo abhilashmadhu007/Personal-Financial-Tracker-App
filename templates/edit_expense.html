@@ -1,0 +1,61 @@
+{% extends "user_base.html" %}
+{% block content %}
+<section id="services" class="services section light-background">
+  
+
+    <!-- Section Title -->
+    
+    <div class="container section-title" data-aos="fade-up">
+      <h2>Edit Expense</h2>
+      
+      <form action="" method="post" class="form-group" enctype="multipart/form-data">
+        
+          {% csrf_token %}
+          <div class="row">
+          <div class="col-md-6 mb-3">
+              <input type="text" name="amount" class="form-control" placeholder="Amount" required="">
+          </div>
+          <div class="col-md-6 ">
+          <select name="category" id="" class="form-control lg-6" required="">
+              <option value="" selected disabled>Select Category</option>
+              <option value="food">Food</option>
+              <option value="transport">Transport</option>
+              <option value="house">House</option>
+              <option value="entertainment">entertainment</option>
+              <option value="other">Other</option>
+          </select>
+          </div>
+          </div>
+          <input type="submit" class="btn btn-primary mt-3" value="Add">
+      
+      </form>
+      <input type="hidden" value="{{expense.amount}}" >
+      <input type="hidden" value="{{expense.category}}" >
+     
+      
+    </div><!-- End Section Title -->
+
+    <div class="container" data-aos="fade-up" data-aos-delay="100">
+      
+
+      <div class="row g-4">
+
+        
+
+        
+
+        
+
+      </div>
+
+    </div>
+
+  </section><!-- /Services Section -->
+  <script>
+    var amount = document.querySelector('input[name="amount"]');
+    var category = document.querySelector('select[name="category"]');
+    amount.value = "{{expense.amount}}";
+    category.value = "{{expense.category}}";
+  </script>
+
+{% endblock content %}

@@ -1,0 +1,75 @@
+{% extends "user_base.html" %}
+{% block content %}
+
+<!-- Services Section -->
+<section id="services" class="services section light-background">
+
+  <!-- Section Title -->
+  <div class="container section-title" data-aos="fade-up">
+  <h2>Set Goal</h2>
+
+    <form action="" method="post" class="form-group" enctype="multipart/form-data">
+      {% csrf_token %}
+      <div class="row">
+        <div class="col-md-6 mb-3">
+          <input type="text" name="goal" class="form-control" placeholder="Goal" required="">
+        </div>
+        <div class="col-md-6">
+          <input type="text" name="amount" class="form-control" placeholder="Amount" required="">
+        </div>
+      </div>
+      <input type="submit" class="btn btn-primary mt-3" value="Add">
+    </form>
+  </div><!-- End Section Title -->
+
+  <div class="container" data-aos="fade-up" data-aos-delay="100">
+    <h2>Balance: {{ balance }}</h2>
+
+    <div class="row g-4">
+      {% for goal in goals %}
+      <div class="col-lg-12" data-aos="fade-up" data-aos-delay="100">
+        <div class="service-card d-flex align-items-center">
+          <div class="icon flex-shrink-0">
+            <i class="bi bi-activity"></i>
+          </div>
+          <div class="row" style="width: 100%; display: flex; align-items: center; justify-content: space-between;">
+            <div class="col-sm-2">{{ goal.goal }}</div>
+            <div class="col-sm-2">Amount: {{ goal.amount }}</div>
+            <div class="col-sm-2">Achieved: {{ goal.set_amount }}</div>
+
+            {% if goal.set_amount >= goal.amount %}
+            <div class="col-sm-3">
+              <button type="button" class="btn btn-success" disabled>Achievement Completed</button>
+            </div>
+            {% else %}
+            <div class="col-sm-3">
+            <form action="{% url 'update_goal' %}" method="post" class="col-sm-4 d-flex align-items-center">
+              {% csrf_token %}
+              <input type="hidden" name="id" value="{{ goal.id }}">
+              <div class="col-sm-10">
+                <input type="text" name="g_amount" class="form-control" placeholder="Add" required="" maxlength="10">
+              </div>
+              &nbsp;&nbsp;
+              <div class="col-sm-2">
+                <input type="submit" class="btn btn-primary" value="Add">
+              </div>
+            </form>
+          </div>
+            {% endif %}
+          </div>
+        </div>
+      </div><!-- End Service Card -->
+      {% endfor %}
+    </div>
+  </div>
+
+  {% if messages %}
+  {% for message in messages %}
+  <script>
+    alert("{{ message }}");
+  </script>
+  {% endfor %}
+  {% endif %}
+
+</section><!-- /Services Section -->
+{% endblock content %}

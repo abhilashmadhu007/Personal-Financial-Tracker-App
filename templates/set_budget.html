@@ -1,0 +1,100 @@
+{% extends "user_base.html" %}
+{% block content %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+<section id="contact" class="contact section light-background">
+
+      <!-- Section Title -->
+      <div class="container section-title" data-aos="fade-up">
+        <h2>Set Budget{{current_budget}}</h2>
+      </div><!-- End Section Title -->
+
+      <div class="container" data-aos="fade-up" data-aos-delay="100">
+
+        <div class="row g-4 g-lg-5">
+          <h2 style="color : orange ;">Current Budget : {{budget}}</h2>
+          <div class="col-lg-5">
+            
+            <div class="info-box" data-aos="fade-up" data-aos-delay="200">
+              
+
+              
+
+              <div class="" data-aos="fade-up" data-aos-delay="400">
+                <canvas id="myChart" style="width:100%;max-width:800px"></canvas>
+              </div>
+              <input type="hidden" value="{{ expense }}" id="expense">
+              <input type="hidden" value="{{ balance }}" id="balance">
+              
+            </div>
+          </div>
+
+          <div class="col-lg-7">
+            <div class="contact-form" data-aos="fade-up" data-aos-delay="300">
+              <h3></h3>
+
+              <form action="" method="post" class="" data-aos="fade-up" data-aos-delay="200">
+                {% csrf_token %}
+                <div class="row gy-4">
+
+                  <div class="col-md-12">
+                    <input type="text" name="budget" class="form-control" placeholder="Enter your Budget" required="">
+                  </div>
+
+                 
+
+                  <div class="col-12 text-center">
+                    <div class="loading"></div>
+                    <div class="error-message"></div>
+                    
+
+                    <button type="submit" class="btn">Update Budget</button>
+                  </div>
+
+                </div>
+              </form>
+
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+    </section><!-- /Contact Section -->
+    {% if messages %}
+    {% for message in messages %}
+        <script>
+            alert("{{ message }}");
+        </script>
+    {% endfor %}
+  {% endif %}
+  
+    <script>
+      var budget =document.getElementById("expense").value;
+      var balance =document.getElementById("balance").value;
+      console.log(budget);
+      console.log(balance);
+      const xValues = ["Expense", "Balance"];
+      const yValues = [budget, balance];
+      const barColors = [
+        "#0d83fd",
+        "#f7b924"
+      ];
+      
+      new Chart("myChart", {
+        type: "pie",
+        data: {
+          labels: xValues,
+          datasets: [{
+            backgroundColor: barColors,
+            data: yValues
+          }]
+        },
+        options: {
+          
+        }
+      });</script>
+
+{% endblock content %}
+
+
